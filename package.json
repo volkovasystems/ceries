@@ -1,0 +1,33 @@
+{
+  "name": "ceries",
+  "version": "0.0.0",
+  "description": "Chain execution.",
+  "main": "ceries.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volkovasystems/ceries.git"
+  },
+  "keywords": [
+    "chain",
+    "execution",
+    "series",
+    "ceries"
+  ],
+  "author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/volkovasystems/ceries/issues"
+  },
+  "homepage": "https://github.com/volkovasystems/ceries#readme",
+  "dependencies": {
+    "called": "^0.3.0",
+    "letgo": "^0.3.0",
+    "plough": "^0.2.0",
+    "raze": "^0.3.0",
+    "snapd": "^0.2.0",
+    "zelf": "^0.2.0"
+  }
+}

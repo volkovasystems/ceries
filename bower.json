@@ -1,0 +1,32 @@
+{
+  "name": "ceries",
+  "version": "0.0.0",
+  "description": "Chain execution.",
+  "main": "ceries.js",
+  "authors": [
+    "Richeve S. Bebedor <richeve.bebedor@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "chain",
+    "execution",
+    "series",
+    "ceries"
+  ],
+  "homepage": "https://github.com/volkovasystems/ceries",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "called": "^0.3.0",
+    "raze": "^0.3.0",
+    "zelf": "^0.2.0",
+    "letgo": "^0.3.0",
+    "plough": "^0.2.0",
+    "snapd": "^0.3.0"
+  }
+}
