@@ -43,10 +43,13 @@
 
 	@module-documentation:
 		Chain execution.
+
+		Passing parameter to callback will pass that parameter to the next method.
 	@end-module-documentation
 
 	@include:
 		{
+			"budge": "budge",
 			"called": "called",
 			"letgo": "letgo",
 			"plough": "plough",
@@ -57,6 +60,7 @@
 	@end-include
 */
 
+const budge = require( "budge" );
 const called = require( "called" );
 const letgo = require( "letgo" );
 const plough = require( "plough" );
@@ -82,19 +86,24 @@ const ceries = function ceries( method ){
 
 	let catcher = letgo.bind( self )( function chain( ){
 		let execute = ( function execute( next ){
+			let parameter = budge( arguments, 1 );
+
 			snapd.bind( self )( function onTick( ){
 				try{
-					next( called.bind( self )( function callback( error ){
+					next.apply( self, [ called.bind( self )( function callback( error ){
+						let parameter = raze( arguments );
+
 						if( error ){
-							catcher.cache.callback.apply( self, raze( arguments ) );
+							catcher.cache.callback.apply( self, parameter );
 
 						}else if( method.length ){
-							execute( method.pop( ).bind( self ) );
+							execute.apply( self, [ method.pop( ).bind( self ) ]
+								.concat( parameter ) );
 
 						}else{
-							catcher.cache.callback.apply( self, raze( arguments ) );
+							catcher.cache.callback.apply( self, parameter );
 						}
-					} ) );
+					} ) ].concat( parameter ) );
 
 				}catch( error ){
 					catcher.cache.callback( error );
