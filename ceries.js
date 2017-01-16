@@ -5,7 +5,7 @@
 		The MIT License (MIT)
 		@mit-license
 
-		Copyright (@c) 2016 Richeve Siodina Bebedor
+		Copyright (@c) 2017 Richeve Siodina Bebedor
 		@email: richeve.bebedor@gmail.com
 
 		Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -45,16 +45,21 @@
 		Chain execution.
 
 		Passing parameter to callback will pass that parameter to the next method.
+
+		Parameters are optional therefore the callback will be passed as the first parameter.
 	@end-module-documentation
 
 	@include:
 		{
 			"budge": "budge",
 			"called": "called",
+			"clazof": "clazof",
+			"harden": "harden",
 			"letgo": "letgo",
 			"plough": "plough",
 			"raze": "raze",
 			"snapd": "snapd",
+			"vound": "vound",
 			"zelf": "zelf"
 		}
 	@end-include
@@ -62,10 +67,13 @@
 
 const budge = require( "budge" );
 const called = require( "called" );
+const clazof = require( "clazof" );
+const harden = require( "harden" );
 const letgo = require( "letgo" );
 const plough = require( "plough" );
 const raze = require( "raze" );
 const snapd = require( "snapd" );
+const vound = require( "vound" );
 const zelf = require( "zelf" );
 
 const ceries = function ceries( method ){
@@ -73,8 +81,8 @@ const ceries = function ceries( method ){
 		@meta-configuration:
 			{
 				"method:required": [
-					"[function]",
-					..."function"
+					[ "function" ],
+					"...function"
 				]
 			}
 		@end-meta-configuration
@@ -84,35 +92,82 @@ const ceries = function ceries( method ){
 
 	let self = zelf( this );
 
-	let catcher = letgo.bind( self )( function chain( ){
-		let execute = ( function execute( next ){
-			let parameter = budge( arguments, 1 );
+	let catcher = letgo.bind( self )( function chain( cache ){
+		let execute = function execute( next ){
+			let parameter = budge( arguments );
 
-			snapd.bind( self )( function onTick( ){
+			catcher.chain.push( snapd.bind( self )( function onTick( ){
 				try{
-					next.apply( self, [ called.bind( self )( function callback( error ){
+					let callback = called.bind( self )( function callback( error ){
 						let parameter = raze( arguments );
 
-						if( error ){
-							catcher.cache.callback.apply( self, parameter );
+						if( clazof( error, Error ) ){
+							catcher.flush( );
+
+							cache.callback.apply( self, parameter.concat( [ catcher ] ) );
 
 						}else if( method.length ){
-							execute.apply( self, [ method.pop( ).bind( self ) ]
-								.concat( parameter ) );
+							execute.apply( self, [ vound( method.pop( ), self ) ].concat( parameter ) );
 
 						}else{
-							catcher.cache.callback.apply( self, parameter );
+							let result = [ ].concat( catcher.result );
+
+							catcher.flush( );
+
+							/*;
+								@note:
+									List of accumulated results will be passed on the first parameter.
+								@end-note
+							*/
+							cache.callback.apply( self, [ result ].concat( parameter ).concat( [ catcher ] ) );
 						}
-					} ) ].concat( parameter ) );
+					} );
+
+					/*;
+						@note:
+							Immediate stop from the callback.
+						@end-note
+					*/
+					harden( "stop", function stop( ){
+						catcher.flush( );
+
+						cache.callback.apply( self, raze( arguments ).concat( [ catcher ] ) );
+
+						return catcher;
+					}, callback );
+
+					/*;
+						@note:
+							Chained series methods may return results to be accumulated.
+						@end-note
+					*/
+					catcher.result.push( next.apply( self, [ callback ].concat( parameter ) ) );
 
 				}catch( error ){
-					catcher.cache.callback( error );
-				}
-			} );
-		} ).bind( self );
+					catcher.flush( );
 
-		execute( method.pop( ).bind( self ) );
+					cache.callback.apply( self, [ error ].concat( parameter ) );
+				}
+			} ).release( ) );
+		};
+
+		execute( vound( method.pop( ), self ) );
 	} );
+
+	harden( "chain", [ ], catcher );
+	harden( "result", [ ], catcher );
+
+	harden( "flush", function flush( ){
+		while( catcher.chain.length ){
+			catcher.chain.pop( ).halt( );
+		}
+
+		while( catcher.result.length ){
+			catcher.result.pop( );
+		}
+
+		return catcher;
+	}, catcher );
 
 	return catcher;
 };
