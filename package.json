@@ -1,12 +1,13 @@
 {
   "name": "ceries",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Chain execution.",
   "main": "ceries.js",
   "support": "ceries.support.js",
   "deploy": "ceries.deploy.js",
+  "browser": "ceries.deploy.js",
   "scripts": {
-    "build": "babel ceries.js -o ceries.support.js && webpack",
+    "build": "babel ceries.js --out-file ceries.support.js --source-maps && webpack --progress --display-modules",
     "test": "mocha ceries-test.js"
   },
   "repository": {
@@ -20,29 +21,33 @@
     "ceries"
   ],
   "author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+  "contributors": [
+    "John Lenon Maghanoy <johnlenonmaghanoy@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/volkovasystems/ceries/issues"
   },
   "homepage": "https://github.com/volkovasystems/ceries#readme",
   "dependencies": {
-    "budge": "^0.5.0",
-    "called": "^0.6.0",
-    "clazof": "^0.2.0",
-    "harden": "^0.13.0",
-    "letgo": "^0.6.0",
-    "plough": "^0.5.0",
-    "raze": "^0.6.0",
-    "snapd": "^0.9.0",
-    "vound": "^0.6.0",
-    "zelf": "^0.4.0"
+    "babel-runtime": "^6.23.0",
+    "budge": "^0.19.0",
+    "called": "^0.18.0",
+    "clazof": "^0.19.0",
+    "harden": "^0.21.0",
+    "letgo": "^0.23.0",
+    "plough": "^0.22.0",
+    "raze": "^0.25.0",
+    "snapd": "^0.18.0",
+    "vound": "^0.15.0",
+    "zelf": "^0.11.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.21.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-latest": "^6.16.0",
-    "source-map-loader": "^0.1.6",
-    "webpack": "^1.14.0"
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-latest": "^6.24.0",
+    "source-map-loader": "^0.2.1",
+    "webpack": "^2.3.2"
   }
 }
