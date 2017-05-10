@@ -1,6 +1,6 @@
 {
   "name": "ceries",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Chain execution.",
   "main": "ceries.deploy.js",
   "support": "ceries.support.js",
@@ -24,15 +24,15 @@
     "tests"
   ],
   "dependencies": {
-    "budge": "^0.24.0",
-    "called": "^0.24.0",
-    "clazof": "^0.24.0",
+    "budge": "^0.28.0",
+    "called": "^0.26.0",
+    "clazof": "^0.27.0",
     "harden": "^0.21.0",
-    "letgo": "^0.27.0",
-    "plough": "^0.23.0",
-    "raze": "^0.27.0",
-    "snapd": "^0.21.0",
-    "vound": "^0.20.0",
+    "letgo": "^0.29.0",
+    "plough": "^0.25.0",
+    "raze": "^0.29.0",
+    "snapd": "^0.23.0",
+    "vound": "^0.22.0",
     "zelf": "^0.11.0"
   }
 }
